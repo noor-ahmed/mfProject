@@ -5,20 +5,17 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version 2.5.1
 
-* System dependencies
+* System dependencies NO MAJOR THING 
 
 * Configuration
+1. DOWNLOAD
+2. create db, rake db:create:migrate
+3. run server, rails s
 
-* Database creation
+* Database 
+BUILT-IN sqlite3
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
+A Demo for Misfit by Noor Ahmed
 * ...
