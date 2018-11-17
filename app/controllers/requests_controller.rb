@@ -1,10 +1,18 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :edit, :update, :destroy]
+  after_action :create_activity, only: [:update, :create]
 
   # GET /requests
   # GET /requests.json
   def index
-    @requests = Request.all
+    @requests = case current_user.role
+                when 'general'
+                  current_user.requests
+                when 'hr_executive'
+                  Request.where(status: ['open', 'hr_reviewed'])
+                when 'hr_manager'
+                  Request.where(status: 'hr_reviewed')
+                end
   end
 
   # GET /requests/1
@@ -25,6 +33,7 @@ class RequestsController < ApplicationController
   # POST /requests.json
   def create
     @request = Request.new(request_params)
+    @request.user = current_user
 
     respond_to do |format|
       if @request.save
@@ -62,13 +71,15 @@ class RequestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_request
       @request = Request.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def request_params
-      params.fetch(:request, {})
+      params.require(:request).permit(:description, :status, :user_id)
+    end
+
+    def create_activity
+      ActivityMonitor.create(user_id: current_user.id, action: request[:action])
     end
 end

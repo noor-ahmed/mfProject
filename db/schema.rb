@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_17_123406) do
+ActiveRecord::Schema.define(version: 2018_11_17_190717) do
+
+  create_table "activity_monitors", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "action"
+  end
 
   create_table "requests", force: :cascade do |t|
     t.string "description"
@@ -31,6 +36,7 @@ ActiveRecord::Schema.define(version: 2018_11_17_123406) do
     t.string "encrypted_password", limit: 128
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128
+    t.integer "role"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end

@@ -14,6 +14,9 @@
   <%= form.label :name %>
   <%= form.text_field :name %>
 
+  <%= form.label :role %>
+  <%= form.select :role, User.roles.keys %>
+
   <%= form.label :email %>
   <%= form.email_field :email %>
 
